@@ -1,0 +1,4 @@
+"0","# Importando os dados"
+"0",""
+"0","DataFrame = read.csv('tempo.csv', sep = ';', na.strings = '', stringsAsFactors = F)"
+"0","DataFrame"
