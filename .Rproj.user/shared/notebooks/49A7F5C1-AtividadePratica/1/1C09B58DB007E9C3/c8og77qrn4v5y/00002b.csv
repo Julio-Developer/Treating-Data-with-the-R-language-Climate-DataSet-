@@ -1,9 +1,0 @@
-"0","MeanTemperature = mean(DataFrame$Umidade, na.rm = T)
-MeanTemperature
-"
-"1","[1]"
-"1"," 89.76923"
-"1","
-"
-"0","DataFrame[is.na(DataFrame$Umidade), ]$Umidade = MeanTemperature"
-"0","DataFrame"

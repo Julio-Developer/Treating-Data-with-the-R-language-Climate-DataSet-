@@ -1,18 +1,67 @@
 ---
-title: "R Notebook"
-output: html_notebook
+title: "Praticas em Limpeza e Tratamento de Dados"
+Curso: "Ciencia de Dados"
 ---
 
-This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
+## Atividade pratica
 
-Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Ctrl+Shift+Enter*. 
+-   Tratar o conjunto de dados - tempo.csv
+
+#### Importando os dados
 
 ```{r}
-plot(cars)
+DataFrame = read.csv('tempo.csv', sep = ';')
+
+DataFrame
 ```
 
-Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Ctrl+Alt+I*.
+#### Tratando os valores nulos
 
-When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the *Preview* button or press *Ctrl+Shift+K* to preview the HTML file).
+```{r}
+summary(DataFrame$Aparencia)
+summary(DataFrame$Temperatura)
+summary(DataFrame$Umidade)
+summary(DataFrame$Vento)
+summary(DataFrame$Jogar)
+```
 
-The preview shows you a rendered HTML copy of the contents of the editor. Consequently, unlike *Knit*, *Preview* does not run any R code chunks. Instead, the output of the chunk when it was last run in the editor is displayed.
+```{r}
+summary(DataFrame$Umidade)
+MeanHumidity = mean(DataFrame$Umidade, na.rm = T)
+DataFrame[!complete.cases(DataFrame),]
+DataFrame[is.na(DataFrame$Umidade),]$Umidade = MeanHumidity
+
+summary(DataFrame$Umidade)
+```
+
+#### Tratando valores fora do dominio
+
+```{r}
+colnames(DataFrame)
+
+unique(DataFrame$Aparencia)
+unique(DataFrame$Temperatura)
+unique(DataFrame$Umidade)
+unique(DataFrame$Vento)
+unique(DataFrame$Jogar)
+```
+
+```{r}
+unique(DataFrame$Aparencia)
+table(DataFrame$Aparencia)
+DataFrame[DataFrame$Aparencia == "menos", ]$Aparencia = 'chuva'
+
+tail(DataFrame, 16)
+```
+
+#### Removendo Colunas não usadas
+
+```{r}
+DataFrame$Vento <- NULL
+DataFrame = DataFrame[(DataFrame$Temperatura > -130) 
+          & (DataFrame$Temperatura < 130)
+          & (DataFrame$Umidade >= 0) 
+          & (DataFrame$Umidade <= 100), ]
+
+DataFrame
+```
